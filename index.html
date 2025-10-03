@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saber Saúde Floripa</title>
+  <meta name="description" content="Saber Saúde Floripa – iniciativa da Escola de Saúde Pública de Florianópolis para formação e capacitação em saúde." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --azul:#0C7CD5;     /* azul SUS */
+      --azul-escuro:#0A5FA3;
+      --verde:#2e7d32;    /* verde institucional */
+      --cinza:#0f172a;    /* slate-900 */
+      --cinza-2:#334155;  /* slate-700 */
+      --bg:#f8fafc;       /* slate-50 */
+      --card:#ffffff;
+      --borda:#e2e8f0;    /* slate-200 */
+      --foco:#94d2ff;
+      --sombra: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --sombra-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
+      color:var(--cinza);
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      background-image: url('https://i.imgur.com/It5Fjd4.png');
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    a{color:inherit;text-decoration:none}
+    main{
+      flex-grow:1;
+      background: var(--bg);
+    }
+    .container{max-width:1100px;margin-inline:auto;padding:0 1rem}
+    header{background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:50}
+    
+    .topbar{display:flex;align-items:center;padding:0.75rem 0}
+    .topbar > .brand { flex: 1; }
+    .topbar > nav { flex-shrink: 0; }
+    .header-right { flex: 1; display: flex; justify-content: flex-end; }
+
+    .brand{display:flex;align-items:center;gap:.75rem;font-weight:700}
+    .brand .logo{width:34px;height:34px;background:linear-gradient(135deg,var(--azul),var(--azul-escuro));border-radius:8px;display:grid;place-items:center;color:#fff;font-size:.95rem}
+    nav ul{display:flex;gap:.5rem;list-style:none;margin:0;padding:0}
+    nav a{padding:.5rem .75rem;border-radius:.5rem;font-weight:600;color:var(--cinza-2);position:relative;transition:all .2s ease}
+    nav a:hover, nav a:focus{background:#eef6ff;color:var(--azul-escuro);outline:none}
+    nav a.active{color:var(--azul);font-weight:700}
+    nav a.active::after{content:'';position:absolute;bottom:0;left:.75rem;right:.75rem;height:2px;background:var(--azul);border-radius:2px}
+    .cta{background:var(--azul);color:#fff;padding:.55rem .9rem;border-radius:.6rem;font-weight:700;transition: background .2s ease}
+    .cta:hover{background:var(--azul-escuro);color:#fff!important}
+    .cta.active::after{display:none}
+
+    .hero{background:linear-gradient(135deg,#c7ebff,#b7f0df);border-bottom:1px solid var(--borda)}
+    .hero-inner{display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:center;padding:2.5rem 0;position:relative}
+    .search{position:relative;display:flex;align-items:center;gap:.5rem;margin:1rem auto 0;max-width:600px;width:100%}
+    .search .icon-search{position:absolute;left:1rem;color:var(--cinza-2);width:1.2rem;height:1.2rem}
+    .search input{flex:1;padding:.8rem 1rem .8rem 2.8rem;border:1px solid var(--borda);border-radius:.6rem;background:#fff;transition:all .2s ease}
+    .search input:focus{border-color:var(--azul);box-shadow:0 0 0 3px var(--foco)}
+    .search button{padding:.8rem 1rem;border:none;border-radius:.6rem;background:var(--verde);color:#fff;font-weight:700;cursor:pointer;transition: filter .2s ease; position: relative; cursor: help;}
+    .search button:hover{filter:brightness(.95)}
+
+    .canvas-container {
+        width: 100%;
+        height: 250px;
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+    #hero-canvas { display: block; width: 100%; height: 100%; }
+
+    .intro{padding:2rem 0; text-align: center;}
+    .intro p{max-width:80ch;line-height:1.7; margin-inline: auto;}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:580px){.grid{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border:1px solid var(--borda);border-radius:14px;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;box-shadow:var(--sombra);transition: all .3s ease;
+      opacity:0;transform:translateY(20px);animation:fade-up .5s ease forwards}
+    .card:hover{transform:translateY(-5px);box-shadow:var(--sombra-lg)}
+    .card .card-header { display: flex; align-items: center; gap: .6rem; min-height: 56px; }
+    .card h3{margin:.25rem 0 .25rem 0}
+    .card p{margin:0;color:var(--cinza-2);line-height:1.6; flex-grow: 1;}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;background:#e8f5e9;color:var(--verde);border:1px solid #cce9d0;padding:.25rem .5rem;border-radius:999px;font-weight:700}
+    .badge.limited { background: #fffbeb; color: #b45309; border-color: #fde68a; position: relative; cursor: help;}
+    .btn{display:inline-block;margin-top:auto;padding:.6rem 1rem;border-radius:.6rem;border:1px solid var(--borda);background:#fff;font-weight:700;transition: all .2s ease}
+    .btn.primary{background:var(--azul);border-color:var(--azul);color:#fff}
+    .btn:hover{filter:brightness(.98);transform:scale(1.02);box-shadow:var(--sombra)}
+
+    @keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
+    .card:nth-child(2){animation-delay:.1s}
+    .card:nth-child(3){animation-delay:.2s}
+
+    .brand-logo-img { height: 38px; }
+    .hero-content { display: flex; flex-direction: column; justify-content: center; }
+
+    .canvas-text {
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10; width: 90%; text-align: center; color: #0b3b64;
+    }
+    .canvas-text h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); margin: 0 0 0.75rem 0; }
+    .canvas-text p { line-height: 1.6; opacity: 0.9; margin: 0; }
+
+    .icon{width:28px;height:28px;color:var(--azul-escuro)}
+    
+    footer{
+      margin-top:auto; /* Pushes footer to the bottom */
+      background:var(--cinza-2);
+      color: #cbd5e1; /* slate-300 */
+      border-top:1px solid var(--cinza);
+    }
+    footer strong {
+      color: #fff;
+    }
+    footer .muted {
+      color: #94a3b8; /* slate-400 */
+    }
+    footer a:not(.cta) {
+      color: #cbd5e1;
+    }
+    footer a:not(.cta):hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+    .footer-inner p {
+      margin-top: .5rem;
+    }
+
+    :focus-visible{outline:3px solid var(--foco);outline-offset:2px;border-radius:.4rem}
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+    
+    .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);display:grid;place-items:center;opacity:0;visibility:hidden;transition:all .3s ease;z-index:100}
+    .modal-overlay.is-visible{opacity:1;visibility:visible}
+    .modal-box{background:#fff;padding:2rem;border-radius:1rem;width:90%;max-width:600px;transform:scale(.9);transition:transform .3s ease; display: flex; flex-direction: column;}
+    .modal-overlay.is-visible .modal-box{transform:scale(1)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem; flex-shrink: 0;}
+    .modal-header h3{margin:0}
+    .modal-content { max-height: 70vh; overflow-y: auto; padding-right: 1em; }
+    .modal-content h4 { margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--cinza); }
+    .modal-content p { margin-bottom: 1rem; line-height: 1.6; }
+    .modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--cinza-2)}
+    
+    .footer-bottom {
+      background: var(--cinza);
+      border-top: 1px solid var(--cinza-2);
+      color: #94a3b8;
+    }
+    .footer-bottom a {
+      color: #94a3b8;
+    }
+    .footer-bottom a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Estilos do Dropdown */
+    .dropdown-header {
+      padding: .8rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--cinza); /* Darker border */
+      color: #e2e8f0; /* Light gray text for header */
+    }
+    .dropdown-header:not(:first-child) {
+        margin-top: .5rem;
+    }
+    .dropdown-item-empty {
+      padding: .6rem .8rem;
+      font-size: .9rem;
+      color: #94a3b8; /* slate-400 */
+      font-style: italic;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      width: 100%;
+      background: var(--cinza-2); /* Dark background */
+      border-radius: .6rem;
+      border: 1px solid var(--cinza); /* Darker border */
+      box-shadow: var(--sombra-lg);
+      padding: 0;
+      z-index: 20;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all .2s ease-in-out;
+      overflow: hidden;
+    }
+    .dropdown-menu.is-active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .dropdown-menu ul { list-style: none; padding: .5rem; margin: 0; }
+    .dropdown-menu a {
+      display: block; padding: .6rem .8rem; border-radius: .4rem;
+      font-size: .9rem; color: #e2e8f0; /* Light gray text for links */
+      white-space: normal;
+      line-height: 1.4;
+    }
+    .dropdown-menu a:hover { 
+      background: var(--cinza); /* Even darker on hover */
+      color: #fff;
+    }
+
+    /* Estilos do Tooltip */
+    [data-tooltip]::before,
+    [data-tooltip]::after {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.2s ease-in-out;
+        z-index: 10;
+    }
+    [data-tooltip]::before {
+        content: attr(data-tooltip);
+        bottom: calc(100% + 8px);
+        background-color: var(--cinza-2);
+        color: #fff;
+        padding: .5rem .75rem;
+        border-radius: .4rem;
+        font-size: .8rem;
+        line-height: 1.4;
+        white-space: normal;
+        width: 280px;
+        text-align: center;
+        box-shadow: var(--sombra);
+    }
+    [data-tooltip]::after {
+        content: '';
+        bottom: calc(100% + 3px);
+        border-width: 5px;
+        border-style: solid;
+        border-color: var(--cinza-2) transparent transparent transparent;
+    }
+    [data-tooltip]:hover::before,
+    [data-tooltip]:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    @media (max-width: 820px) {
+      .footer-inner{
+        grid-template-columns:1fr;
+        text-align: center;
+      }
+      .footer-inner > div:last-child {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--cinza);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar" role="navigation" aria-label="Principal">
+      <div class="brand">
+        <img class="brand-logo-img" src="https://i.imgur.com/cvhWPHQ.png" alt="Logo da Prefeitura Municipal de Florianópolis">
+        <span>Saber Saúde Floripa</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#residencias">Residências</a></li>
+          <li><a href="#especializacoes">Especializações</a></li>
+          <li><a href="#gestao-e-organizacao">Gestão e Organização</a></li>
+        </ul>
+      </nav>
+      <div class="header-right">
+        <img src="https://i.imgur.com/OWNeRoo.png" alt="Logo do SUS" style="height: 38px;">
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero" aria-label="Apresentação">
+      <div class="container hero-inner">
+        <div class="canvas-container" aria-hidden="true">
+            <div class="canvas-text">
+                <h1>Saber Saúde Floripa</h1>
+                <p>Iniciativa da <strong>Escola de Saúde Pública de Florianópolis</strong> para apoiar a formação, atualização e capacitação dos profissionais da Secretaria Municipal de Saúde. Explore a rede de conhecimento que conecta nossos profissionais e serviços.</p>
+            </div>
+            <canvas id="hero-canvas"></canvas>
+        </div>
+        <form id="search-form" class="search" role="search" aria-label="Pesquisar na biblioteca">
+          <label class="visually-hidden" for="q">Pesquisar</label>
+          <svg class="icon-search" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+          <input id="q" name="q" type="search" placeholder="Buscar por protocolos, manuais..." />
+          <button type="submit" data-tooltip="A página irá exibir abaixo apenas os cards que contêm o texto pesquisado, para retornar a ver todos limpe a pesquisa.">Buscar</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="container intro" aria-label="Apresentação detalhada">
+      <p>Mais do que um repositório, o Saber Saúde Floripa organiza e valoriza o conhecimento produzido no território, promovendo <strong>equidade</strong>, <strong>acesso</strong> e <strong>cuidado de qualidade</strong> no SUS. Explore os acervos por trilhas formativas e encontre protocolos, manuais, guias, legislações e estudos de caso.</p>
+    </section>
+
+    <div class="container">
+      <section id="residencias" aria-labelledby="ttl-res"></section>
+      <section id="especializacoes" aria-labelledby="ttl-esp"></section>
+      <section id="gestao-e-organizacao" aria-labelledby="ttl-go"></section>
+      
+      <div class="grid">
+        <article class="card" aria-labelledby="ttl-res" style="position: relative;">
+          <div class="card-header">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21V19a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h3 id="ttl-res">Residências</h3>
+          </div>
+          <span class="badge limited" aria-label="acesso limitado" data-tooltip="Parte do material pode ser de acesso reservado apenas aos alunos">● Acesso Limitado</span>
+          <p>Materiais e produções técnicas dos Programas de Residência em Saúde (médica, multiprofissional e áreas profissionais).</p>
+          <button class="btn primary" id="btn-residencias">Acessar Residências</button>
+          <div class="dropdown-menu" id="dropdown-residencias">
+              <div class="dropdown-header">Residência Multiprofissional em Gestão em Saúde</div>
+              <ul>
+                  <li><a href="https://espfloripa.github.io/ResidenciaGestao/" target="_blank" rel="noopener noreferrer">Conheça a Residência em Gestão</a></li>
+              </ul>
+              <div class="dropdown-header">Residência Multiprofissional em Saúde da Família</div>
+              <ul>
+                  <li class="dropdown-item-empty">Vazio</li>
+              </ul>
+              <div class="dropdown-header">Residência Uniprofissional em Enfermagem em APS</div>
+              <ul>
+                  <li class="dropdown-item-empty">Vazio</li>
+              </ul>
+              <div class="dropdown-header">Residência em Medicina de Família e Comunidade</div>
+              <ul>
+                  <li class="dropdown-item-empty">Vazio</li>
+              </ul>
+              <div class="dropdown-header">Residência em Psiquiatria</div>
+              <ul>
+                  <li class="dropdown-item-empty">Vazio</li>
+              </ul>
+          </div>
+        </article>
+        
+        <article class="card" aria-labelledby="ttl-esp" style="position: relative;">
+          <div class="card-header">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V6l8-3 8 3v13.5"/><path d="M4 19.5l8-3 8 3"/><path d="M12 3v13.5"/></svg>
+            <h3 id="ttl-esp">Especializações</h3>
+          </div>
+          <span class="badge limited" aria-label="acesso limitado" data-tooltip="Parte do material pode ser de acesso reservado apenas aos alunos">● Acesso Limitado</span>
+          <p>Conteúdos didáticos, módulos e referências de cursos de especialização ofertados pela Escola de Saúde Pública.</p>
+          <button class="btn primary" id="btn-especializacoes">Acessar Especializações</button>
+          <div class="dropdown-menu" id="dropdown-especializacoes">
+            <div class="dropdown-header">Especialização em Liderança e Gestão em Saúde</div>
+            <ul>
+              <li><a href="https://espfloripa.github.io/Comunicacao-oral-para-plateias/" target="_blank" rel="noopener noreferrer">Módulo 4 - Comunicação para Plateias</a></li>
+              <li><a href="https://espfloripa.github.io/Organizacao-de-Sistemas-de-Saude/" target="_blank" rel="noopener noreferrer">Módulo 5 - Sistemas de Saúde</a></li>
+              <li><a href="https://espfloripa.github.io/VBHC-e-Triple-Aim/" target="_blank" rel="noopener noreferrer">Módulo 5 - VBHC e Triple Aim</a></li>
+              <li><a href="https://espfloripa.github.io/Conceitos-para-gest-o-p-blica-e-privada/" target="_blank" rel="noopener noreferrer">Módulo 5 - Gestão Pública e Privada</a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" aria-labelledby="ttl-go" style="position: relative;">
+          <div class="card-header">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+            <h3 id="ttl-go">Gestão da Clínica e Organização dos Serviços</h3>
+          </div>
+          <span class="badge" aria-label="acesso livre">● Acesso Livre</span>
+          <p>Cursos Livres e Conteúdo Didáticos que agregam ferramentas de apoio à decisão clínica e à organização dos serviços.</p>
+          <button class="btn primary" id="btn-gestao">Acessar Materiais</button>
+          <div class="dropdown-menu" id="dropdown-gestao">
+              <div class="dropdown-header">Gestão da Clínica</div>
+              <ul>
+                  <li><a href="https://espfloripa.github.io/Esporotricose/" target="_blank" rel="noopener noreferrer">Esporotricose</a></li>
+                  <li><a href="https://espfloripa.github.io/HTLV/" target="_blank" rel="noopener noreferrer">HTLV</a></li>
+                  <li><a href="https://espfloripa.github.io/testes-IST/" target="_blank" rel="noopener noreferrer">Teste certo HIV, Sífilis e Hepatites B e C</a></li>
+                  <li><a href="https://espfloripa.github.io/Diretrizes-CA-Mama/" target="_blank" rel="noopener noreferrer">Novas Diretrizes CA de Mama</a></li>
+              </ul>
+              <div class="dropdown-header">Organização dos Serviços</div>
+              <ul>
+                  <li><a href="https://espfloripa.github.io/Analise-de-situacao-de-saude-2025/" target="_blank" rel="noopener noreferrer">Análise de Situação de Saúde 2025</a></li>
+                  <li><a href="https://espfloripa.github.io/Pop-Rua/" target="_blank" rel="noopener noreferrer">Cuidado à População em Situação de Rua</a></li>
+                  <li><a href="https://espfloripa.github.io/Escuta-Especializada/" target="_blank" rel="noopener noreferrer">Protocolo de Consulta Especializada</a></li>
+              </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <strong>Saber Saúde Floripa</strong>
+        <p class="muted">Uma iniciativa da Escola de Saúde Pública de Florianópolis para fortalecer a prática profissional e a gestão do cuidado.</p>
+      </div>
+      <div id="contato">
+        <strong>Contato</strong>
+        <p class="muted">Dúvidas ou sugestões? Fale conosco através do nosso canal de atendimento.</p>
+        <a href="#" class="cta" id="contact-cta" style="margin-top: 0.5rem; display: inline-block;">Ver Informações</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;font-size:.9rem">
+        <span>© <span id="ano"></span> Escola de Saúde Pública de Florianópolis</span>
+        <a href="#" id="terms-link">Termos de uso • Privacidade</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="contact-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="contact-modal-title">Contato</h3>
+        <button class="modal-close" aria-label="Fechar modal">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p>Para mais informações, entre em contato através dos seguintes canais:</p>
+        <p><strong>E-mail:</strong> espfloripa@gmail.com</p>
+        <p><strong>Telefone:</strong> +55 (48) 3239-1590</p>
+      </div>
+    </div>
+  </div>
+  
+  <div id="terms-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="terms-modal-title">Termos de Uso e Política de Privacidade</h3>
+        <button class="modal-close" aria-label="Fechar modal">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p><strong>Saber Saúde Floripa – Escola de Saúde Pública de Florianópolis</strong></p>
+        <h4>1. Finalidade da Plataforma</h4>
+        <p>O Saber Saúde Floripa é uma iniciativa da Escola de Saúde Pública de Florianópolis (ESP-Floripa), vinculada à Secretaria Municipal de Saúde de Florianópolis (SMS), destinada à disponibilização de materiais didáticos, técnicos e científicos voltados à formação, capacitação e aperfeiçoamento de profissionais da saúde no âmbito do Sistema Único de Saúde (SUS).</p>
+        <h4>2. Natureza dos Conteúdos</h4>
+        <p>Os conteúdos disponibilizados na plataforma possuem duas naturezas de acesso:</p>
+        <p><strong>Acesso Livre:</strong> materiais técnicos e didáticos de interesse geral para profissionais de saúde e comunidade, com finalidade de atualização individual e aperfeiçoamento profissional.<br>
+        <strong>Acesso Restrito ou Limitado:</strong> materiais destinados exclusivamente a discentes regularmente matriculados em programas de residência, especialização, aperfeiçoamento ou outras atividades formativas promovidas pela ESP-Floripa e pela SMS.</p>
+        <h4>3. Direitos Autorais e Propriedade Intelectual</h4>
+        <p>Todos os materiais disponibilizados no Saber Saúde Floripa (textos, vídeos, apostilas, manuais, protocolos, apresentações e demais conteúdos) são de titularidade da Escola de Saúde Pública de Florianópolis ou de seus autores parceiros, estando protegidos pela Lei nº 9.610/1998 (Lei de Direitos Autorais), pela Constituição Federal de 1988, art. 5º, XXVII e XXVIII, e demais legislações aplicáveis.</p>
+        <p>É vedada a reprodução, cópia, distribuição, tradução, adaptação ou utilização dos materiais para fins comerciais ou em cursos, treinamentos e capacitações sem prévia e expressa autorização da ESP-Floripa.<br>
+        O uso indevido dos materiais poderá ensejar responsabilização civil e penal, nos termos da legislação vigente.</p>
+        <h4>4. Condições de Uso dos Materiais</h4>
+        <p><strong>Materiais de Acesso Livre:</strong> podem ser utilizados individualmente por profissionais de saúde do SUS e demais interessados para fins de consulta, estudo e capacitação pessoal. O uso em contextos coletivos (cursos, treinamentos, formações institucionais ou similares) depende de autorização expressa da ESP-Floripa.<br>
+        <strong>Materiais de Acesso Restrito ou Limitado:</strong> são de uso exclusivo dos alunos matriculados em programas institucionais da SMS/ESP-Floripa. É vedada sua disponibilização a terceiros ou utilização fora do contexto pedagógico autorizado.</p>
+        <h4>5. Privacidade e Proteção de Dados</h4>
+        <p>O Saber Saúde Floripa observa a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 – LGPD). Dados pessoais coletados na plataforma (nome, e-mail, matrícula ou dados de acesso) serão utilizados exclusivamente para fins acadêmicos e administrativos, não sendo compartilhados com terceiros sem consentimento, exceto quando exigido por lei.</p>
+        <h4>6. Responsabilidades do Usuário</h4>
+        <p>O usuário compromete-se a:</p>
+        <ul>
+            <li>Utilizar os conteúdos de acordo com os presentes Termos de Uso;</li>
+            <li>Respeitar a legislação de direitos autorais e de proteção de dados;</li>
+            <li>Não reproduzir, compartilhar ou comercializar conteúdos sem autorização;</li>
+            <li>Preservar sua senha e credenciais de acesso, nos casos de materiais restritos.</li>
+        </ul>
+        <h4>7. Penalidades</h4>
+        <p>O descumprimento das regras poderá implicar:</p>
+        <ul>
+            <li>Suspensão ou cancelamento do acesso à plataforma;</li>
+            <li>Responsabilização administrativa no âmbito institucional;</li>
+            <li>Responsabilização civil e penal conforme previsto na Lei de Direitos Autorais (Lei nº 9.610/1998) e no Código Penal Brasileiro (arts. 184 e 299).</li>
+        </ul>
+        <h4>8. Disposições Finais</h4>
+        <p>O uso da plataforma implica plena aceitação destes Termos.</p>
+        <p>Quaisquer dúvidas ou solicitações de autorização para uso de materiais devem ser encaminhadas à Escola de Saúde Pública de Florianópolis, pelo e-mail institucional informado na seção de contato da plataforma.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // --- LÓGICA DO MODAL DE CONTATO ---
+    const contactCta = document.getElementById('contact-cta');
+    const modalOverlay = document.getElementById('contact-modal');
+    const modalClose = modalOverlay.querySelector('.modal-close');
+    contactCta.addEventListener('click', (e) => { e.preventDefault(); modalOverlay.classList.add('is-visible'); });
+    modalClose.addEventListener('click', () => { modalOverlay.classList.remove('is-visible'); });
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) { modalOverlay.classList.remove('is-visible'); } });
+    
+    // --- LÓGICA DO MODAL DE TERMOS ---
+    const termsLink = document.getElementById('terms-link');
+    const termsModal = document.getElementById('terms-modal');
+    const termsModalClose = termsModal.querySelector('.modal-close');
+    termsLink.addEventListener('click', (e) => { e.preventDefault(); termsModal.classList.add('is-visible'); });
+    termsModalClose.addEventListener('click', () => { termsModal.classList.remove('is-visible'); });
+    termsModal.addEventListener('click', (e) => { if (e.target === termsModal) { termsModal.classList.remove('is-visible'); } });
+
+    // --- OBSERVER DA NAVEGAÇÃO ---
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === entry.target.id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -70% 0px' });
+    sections.forEach(section => { observer.observe(section); });
+
+    const sr = document.createElement('style');
+    sr.textContent = `.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}`;
+    document.head.appendChild(sr);
+
+    // --- LÓGICA DOS DROPDOWNS ---
+    const btnEspecializacoes = document.getElementById('btn-especializacoes');
+    const dropdownEspecializacoes = document.getElementById('dropdown-especializacoes');
+    const btnResidencias = document.getElementById('btn-residencias');
+    const dropdownResidencias = document.getElementById('dropdown-residencias');
+    const btnGestao = document.getElementById('btn-gestao');
+    const dropdownGestao = document.getElementById('dropdown-gestao');
+
+    btnEspecializacoes.addEventListener('click', (event) => {
+        event.stopPropagation();
+        dropdownEspecializacoes.classList.toggle('is-active');
+    });
+    btnResidencias.addEventListener('click', (event) => {
+        event.stopPropagation();
+        dropdownResidencias.classList.toggle('is-active');
+    });
+    btnGestao.addEventListener('click', (event) => {
+        event.stopPropagation();
+        dropdownGestao.classList.toggle('is-active');
+    });
+
+    window.addEventListener('click', () => {
+        if (dropdownEspecializacoes.classList.contains('is-active')) {
+            dropdownEspecializacoes.classList.remove('is-active');
+        }
+        if (dropdownResidencias.classList.contains('is-active')) {
+            dropdownResidencias.classList.remove('is-active');
+        }
+        if (dropdownGestao.classList.contains('is-active')) {
+            dropdownGestao.classList.remove('is-active');
+        }
+    });
+
+    // --- LÓGICA DA BUSCA ---
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('q');
+    const cards = document.querySelectorAll('.grid .card');
+    let noResultsMessage = document.getElementById('no-results');
+
+    if (!noResultsMessage) {
+        noResultsMessage = document.createElement('div');
+        noResultsMessage.id = 'no-results';
+        noResultsMessage.textContent = 'Nenhum resultado encontrado para sua busca.';
+        noResultsMessage.style.textAlign = 'center';
+        noResultsMessage.style.padding = '2rem';
+        noResultsMessage.style.fontWeight = '500';
+        noResultsMessage.style.color = 'var(--cinza-2)';
+        noResultsMessage.style.display = 'none';
+        document.querySelector('.grid').insertAdjacentElement('afterend', noResultsMessage);
+    }
+
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = searchInput.value.toLowerCase().trim();
+        performSearch(query);
+    });
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        if (query === '') {
+            resetSearch();
+        }
+    });
+
+    function performSearch(query) {
+        let resultsFound = 0;
+        cards.forEach(card => {
+            const cardText = card.textContent.toLowerCase();
+            if (cardText.includes(query)) {
+                card.style.display = 'flex';
+                resultsFound++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        noResultsMessage.style.display = resultsFound === 0 ? 'block' : 'none';
+    }
+
+    function resetSearch() {
+        cards.forEach(card => {
+            card.style.display = 'flex';
+        });
+        noResultsMessage.style.display = 'none';
+    }
+
+    // --- LÓGICA DO CANVAS ---
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+    const config = {
+      particleColor: 'rgba(10, 95, 163, 0.7)', lineColor: 'rgba(10, 95, 163, 0.3)', particleAmount: 60,
+      defaultRadius: 3, variantRadius: 3, defaultSpeed: 0.5, variantSpeed: 1, linkRadius: 100,
+    };
+    const mouse = { x: null, y: null, radius: 150 };
+    function setupCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('mousemove', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = event.clientX - rect.left;
+        mouse.y = event.clientY - rect.top;
+    });
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.offsetWidth; this.y = Math.random() * canvas.offsetHeight;
+            this.radius = config.defaultRadius + Math.random() * config.variantRadius;
+            this.speed = config.defaultSpeed + Math.random() * config.variantSpeed;
+            this.directionAngle = Math.floor(Math.random() * 360);
+            this.vector = { x: Math.cos(this.directionAngle) * this.speed, y: Math.sin(this.directionAngle) * this.speed };
+        }
+        draw() {
+            ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.closePath();
+            ctx.fillStyle = config.particleColor; ctx.fill();
+        }
+        update() { this.border(); this.x += this.vector.x; this.y += this.vector.y; }
+        border() {
+            if (this.x >= canvas.offsetWidth || this.x <= 0) this.vector.x *= -1;
+            if (this.y >= canvas.offsetHeight || this.y <= 0) this.vector.y *= -1;
+            if (this.x > canvas.offsetWidth) this.x = canvas.offsetWidth;
+            if (this.y > canvas.offsetHeight) this.y = canvas.offsetHeight;
+            if (this.x < 0) this.x = 0; if (this.y < 0) this.y = 0;
+        }
+    }
+    function linkParticles(point1, point2) {
+        const distance = Math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2);
+        const opacity = 1 - distance / config.linkRadius;
+        if (opacity > 0) {
+            ctx.lineWidth = 0.5; ctx.strokeStyle = `rgba(10, 95, 163, ${opacity})`;
+            ctx.beginPath(); ctx.moveTo(point1.x, point1.y); ctx.lineTo(point2.x, point2.y);
+            ctx.closePath(); ctx.stroke();
+        }
+    }
+    function init() {
+        setupCanvas(); particlesArray = [];
+        for (let i = 0; i < config.particleAmount; i++) { particlesArray.push(new Particle()); }
+    }
+    function animate() {
+        ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+        particlesArray.forEach(particle => { particle.update(); particle.draw(); });
+        for (let i = 0; i < particlesArray.length; i++) {
+            for (let j = i; j < particlesArray.length; j++) { linkParticles(particlesArray[i], particlesArray[j]); }
+        }
+        if (mouse.x != null && mouse.y != null) {
+            particlesArray.forEach(p => {
+                const distance = Math.sqrt((mouse.x - p.x) ** 2 + (mouse.y - p.y) ** 2);
+                 if (distance < mouse.radius) { linkParticles(mouse, p); }
+            })
+        }
+        requestAnimationFrame(animate);
+    }
+    window.addEventListener('resize', init);
+    init();
+    animate();
+  </script>
+</body>
+</html>
+
