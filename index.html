@@ -78,7 +78,7 @@
         overflow: hidden;
         position: relative;
     }
-    #hero-canvas { display: block; width: 100%; height: 100%; }
+    #hero-canvas { display: block; width: 100%; height: 100%; opacity: 0.7; }
 
     .intro{padding:2rem 0; text-align: center;}
     .intro p{max-width:80ch;line-height:1.7; margin-inline: auto;}
@@ -127,8 +127,8 @@
         transform: translate(-50%, -50%);
         z-index: 10; width: 90%; text-align: center; color: #0b3b64;
     }
-    .canvas-text h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); margin: 0 0 0.75rem 0; }
-    .canvas-text p { line-height: 1.6; opacity: 0.9; margin: 0; }
+    .canvas-text h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); margin: 0 0 0.75rem 0; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .canvas-text p { line-height: 1.6; opacity: 1; margin: 0; text-shadow: 0 1px 4px rgba(0,0,0,0.15); }
 
     .icon{width:28px;height:28px;color:var(--azul-escuro)}
     
@@ -187,6 +187,13 @@
     .footer-bottom a:hover {
       color: #fff;
       text-decoration: underline;
+    }
+    .footer-bottom-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .8rem 0;
+        font-size: .9rem;
     }
 
     /* Estilos do Dropdown */
@@ -305,6 +312,13 @@
         border-top: 1px solid var(--cinza);
       }
     }
+    @media (max-width: 580px) {
+      .footer-bottom-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -334,7 +348,7 @@
         <div class="canvas-container" aria-hidden="true">
             <div class="canvas-text">
                 <h1>Saber Saúde Floripa</h1>
-                <p>Iniciativa da <strong>Escola de Saúde Pública de Florianópolis</strong> para apoiar a formação, atualização e capacitação dos profissionais da Secretaria Municipal de Saúde. Explore a rede de conhecimento que conecta nossos profissionais e serviços.</p>
+                <p>Iniciativa da <strong>Escola de Saúde Pública de Florianópolis</strong> para apoiar a formação, atualização e capacitação dos profissionais da Secretaria Municipal de Saúde. Explore a <strong>rede de conhecimento</strong> que conecta nossos profissionais e serviços.</p>
             </div>
             <canvas id="hero-canvas"></canvas>
         </div>
@@ -449,7 +463,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;font-size:.9rem">
+      <div class="container footer-bottom-content">
         <span>© <span id="ano"></span> Escola de Saúde Pública de Florianópolis</span>
         <a href="#" id="terms-link">Termos de uso • Privacidade</a>
       </div>
