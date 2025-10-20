@@ -119,7 +119,6 @@
     .card:nth-child(2){animation-delay:.1s}
     .card:nth-child(3){animation-delay:.2s}
     
-    /* Animação de contorno para o resultado da busca (NOVO NOME PARA EVITAR CACHE) */
     @keyframes blink-outline {
         50% { outline-color: var(--verde); }
     }
@@ -254,6 +253,23 @@
     .dropdown-menu a:hover { 
       background: var(--cinza); /* Even darker on hover */
       color: #fff;
+    }
+
+    .dropdown-item-disabled {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .6rem .8rem;
+        font-size: .9rem;
+        color: #94a3b8; /* slate-400, a muted color */
+        cursor: default;
+    }
+    .coming-soon-badge {
+        color: #f59e0b; /* Amber 500, a warm yellow */
+        font-style: italic;
+        font-size: 0.8rem;
+        font-weight: 500;
+        white-space: nowrap;
     }
 
     /* Estilos do Tooltip */
@@ -448,12 +464,16 @@
                   <li><a href="https://espfloripa.github.io/Metanol/" target="_blank" rel="noopener noreferrer">Intoxicação por Metanol</a></li>
                   <li><a href="https://espfloripa.github.io/Diretrizes-CA-Mama/" target="_blank" rel="noopener noreferrer">Novas Diretrizes CA de Mama</a></li>
                   <li><a href="https://espfloripa.github.io/Sindromes-Gripais/" target="_blank" rel="noopener noreferrer">Síndromes Gripais</a></li>
+                  <li><a href="https://espfloripa.github.io/Tabagismo/" target="_blank" rel="noopener noreferrer">Tabagismo</a></li>
                   <li><a href="https://espfloripa.github.io/testes-IST/" target="_blank" rel="noopener noreferrer">Teste certo HIV, Sífilis e Hepatites B e C</a></li>
               </ul>
               <div class="dropdown-header">Organização dos Serviços</div>
               <ul>
                   <li><a href="https://espfloripa.github.io/Analise-de-situacao-de-saude-2025/" target="_blank" rel="noopener noreferrer">Análise de Situação de Saúde 2025</a></li>
-                  <li><a href="https://espfloripa.github.io/Pop-Rua/" target="_blank" rel="noopener noreferrer">Cuidado à População em Situação de Rua</a></li>
+                  <li class="dropdown-item-disabled">
+                    <span>Cuidado à População em Situação de Rua</span>
+                    <span class="coming-soon-badge">em breve</span>
+                  </li>
                   <li><a href="https://espfloripa.github.io/Escuta-Especializada/" target="_blank" rel="noopener noreferrer">Protocolo de Consulta Especializada</a></li>
               </ul>
           </div>
@@ -751,5 +771,4 @@
   </script>
 </body>
 </html>
-
 
