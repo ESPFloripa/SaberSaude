@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -128,12 +129,13 @@
     .card:nth-child(3){animation-delay:.2s}
     
     @keyframes blink-outline {
-        50% { outline-color: var(--verde); }
+        0%, 100% { outline-color: transparent; }
+        25%, 75% { outline-color: var(--verde); }
     }
     .search-result-highlight {
         outline: 3px solid transparent;
         outline-offset: 2px;
-        animation: blink-outline 0.75s ease-in-out 2;
+        animation: blink-outline 1.5s ease-in-out;
     }
 
     .brand-logo-img { height: 38px; }
@@ -144,13 +146,22 @@
         transform: translate(-50%, -50%);
         z-index: 10; width: 90%; text-align: center; color: #0b3b64;
     }
-    .canvas-text h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); margin: 0 0 0.75rem 0; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    .canvas-text p { line-height: 1.6; opacity: 1; margin: 0; text-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+    .canvas-text h1 { 
+        font-size: clamp(1.6rem, 2.6vw, 2.4rem); 
+        margin: 0 0 0.75rem 0; 
+        text-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+    }
+    .canvas-text p { 
+        line-height: 1.6; 
+        opacity: 1; 
+        margin: 0; 
+        text-shadow: 0 1px 4px rgba(0,0,0,0.15); 
+    }
 
     .icon{width:28px;height:28px;color:var(--azul-escuro)}
     
     footer{
-      margin-top:auto; /* Pushes footer to the bottom */
+      margin-top:auto; /* Empurra o rodapé para o final */
       background:var(--cinza-2);
       color: #cbd5e1; /* slate-300 */
       border-top:1px solid var(--cinza);
@@ -217,8 +228,8 @@
     .dropdown-header {
       padding: .8rem;
       font-weight: 600;
-      border-bottom: 1px solid var(--cinza); /* Darker border */
-      color: #e2e8f0; /* Light gray text for header */
+      border-bottom: 1px solid var(--cinza); /* Borda mais escura */
+      color: #e2e8f0; /* Texto cinza claro para o cabeçalho */
     }
     .dropdown-header:not(:first-child) {
         margin-top: .5rem;
@@ -234,9 +245,9 @@
       top: calc(100% + 0.5rem);
       left: 0;
       width: 100%;
-      background: var(--cinza-2); /* Dark background */
+      background: var(--cinza-2); /* Fundo escuro */
       border-radius: .6rem;
-      border: 1px solid var(--cinza); /* Darker border */
+      border: 1px solid var(--cinza); /* Borda mais escura */
       box-shadow: var(--sombra-lg);
       padding: 0;
       z-index: 20;
@@ -254,12 +265,12 @@
     .dropdown-menu ul { list-style: none; padding: .5rem; margin: 0; }
     .dropdown-menu a {
       display: block; padding: .6rem .8rem; border-radius: .4rem;
-      font-size: .9rem; color: #e2e8f0; /* Light gray text for links */
+      font-size: .9rem; color: #e2e8f0; /* Texto cinza claro para os links */
       white-space: normal;
       line-height: 1.4;
     }
     .dropdown-menu a:hover { 
-      background: var(--cinza); /* Even darker on hover */
+      background: var(--cinza); /* Ainda mais escuro no hover */
       color: #fff;
     }
 
@@ -269,11 +280,11 @@
         align-items: center;
         padding: .6rem .8rem;
         font-size: .9rem;
-        color: #94a3b8; /* slate-400, a muted color */
+        color: #94a3b8; /* slate-400, cor suave */
         cursor: default;
     }
     .coming-soon-badge {
-        color: #f59e0b; /* Amber 500, a warm yellow */
+        color: #f59e0b; /* Amber 500, amarelo quente */
         font-style: italic;
         font-size: 0.8rem;
         font-weight: 500;
@@ -320,22 +331,22 @@
     }
 
     @media (max-width: 820px) {
-      /* Header adjustments for mobile */
+      /* Ajustes do cabeçalho para mobile */
       .topbar {
         flex-wrap: wrap;
         justify-content: space-between;
       }
       .topbar > nav {
-        order: 3; /* Move nav to the bottom */
-        width: 100%; /* Make nav full width */
+        order: 3; /* Move a navegação para baixo */
+        width: 100%; /* Navegação em largura total */
         margin-top: 0.5rem;
       }
       nav ul {
-        justify-content: center; /* Center nav links */
-        flex-wrap: wrap; /* Allow links to wrap on very small screens */
+        justify-content: center; /* Centraliza os links da navegação */
+        flex-wrap: wrap; /* Permite quebra de linha em telas muito pequenas */
       }
       
-      /* Footer adjustments for mobile */
+      /* Ajustes do rodapé para mobile */
       .footer-inner{
         grid-template-columns:1fr;
         text-align: center;
@@ -400,6 +411,7 @@
     </section>
 
     <div class="container">
+      <!-- Seções âncora para navegação -->
       <section id="residencias" aria-labelledby="ttl-res"></section>
       <section id="especializacoes" aria-labelledby="ttl-esp"></section>
       <section id="cursos-livres" aria-labelledby="ttl-cl"></section>
@@ -457,11 +469,7 @@
               <li><a href="https://espfloripa.github.io/Adaptabilidade-criatividade-e-inovacao/" target="_blank" rel="noopener noreferrer">Módulo 3 - Adaptabilidade, Criatividade e Inovação</a></li>
               <li><a href="https://espfloripa.github.io/Desing-Thinking/" target="_blank" rel="noopener noreferrer">Módulo 3 - Desing Thinking</a></li>
               <li><a href="https://espfloripa.github.io/Inteligencia-Emocional/" target="_blank" rel="noopener noreferrer">Módulo 3 - Inteligência Emocional</a></li>
-              <li><a href="https://espfloripa.github.io/Priorizacao-e-tomada-de-decisao/" target="_blank" rel="noopener noreferrer">Módulo 3 - Priorização e Tomada de Decisão</a></li>
-              <li class="dropdown-item-disabled">
-                <span>Módulo 4 - Comunicação para Plateias</span>
-                <span class="coming-soon-badge">em breve</span>
-              </li>
+              <li><a href="https://espfloripa.github.io/Comunicacao-oral-para-plateias/" target="_blank" rel="noopener noreferrer">Módulo 4 - Comunicação Oral</a></li>
               <li><a href="https://espfloripa.github.io/Conceitos-para-gest-o-p-blica-e-privada/" target="_blank" rel="noopener noreferrer">Módulo 5 - Governança Pública e Corporativa</a></li>
               <li><a href="https://espfloripa.github.io/Organizacao-de-Sistemas-de-Saude/" target="_blank" rel="noopener noreferrer">Módulo 5 - Organização de Sistemas de Saúde</a></li>
               <li><a href="https://espfloripa.github.io/Sistemas-de-Saude-Comparados/" target="_blank" rel="noopener noreferrer">Módulo 5 - Sistemas de Saúde Comparados</a></li>
@@ -524,6 +532,7 @@
     </div>
   </footer>
 
+  <!-- Modal de Contato -->
   <div id="contact-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
     <div class="modal-box">
       <div class="modal-header">
@@ -538,6 +547,7 @@
     </div>
   </div>
   
+  <!-- Modal de Termos de Uso -->
   <div id="terms-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
     <div class="modal-box">
       <div class="modal-header">
@@ -551,7 +561,7 @@
         <h4>2. Natureza dos Conteúdos</h4>
         <p>Os conteúdos disponibilizados na plataforma possuem duas naturezas de acesso:</p>
         <p><strong>Acesso Livre:</strong> materiais técnicos e didáticos de interesse geral para profissionais de saúde e comunidade, com finalidade de atualização individual e aperfeiçoamento profissional.<br>
-        <strong>Acesso Restrito ou Limitado:</strong> materiais destinados exclusivamente a discentes regularmente matriculados em programas de residência, especialização, aperfeiçoamento ou outras atividades formativas promovidas pela ESP-Floripa e pela SMS.</p>
+        <strong>Acesso Restrito ou Limitado:</strong> materiais destinados exclusivamente a discentes regularly matriculados em programas de residência, especialização, aperfeiçoamento ou outras atividades formativas promovidas pela ESP-Floripa e pela SMS.</p>
         <h4>3. Direitos Autorais e Propriedade Intelectual</h4>
         <p>Todos os materiais disponibilizados no Saber Saúde Floripa (textos, vídeos, apostilas, manuais, protocolos, apresentações e demais conteúdos) são de titularidade da Escola de Saúde Pública de Florianópolis ou de seus autores parceiros, estando protegidos pela Lei nº 9.610/1988 (Lei de Direitos Autorais), pela Constituição Federal de 1988, art. 5º, XXVII e XXVIII, e demais legislações aplicáveis.</p>
         <p>É vedada a reprodução, cópia, distribuição, tradução, adaptação ou utilização dos materiais para fins comerciais ou em cursos, treinamentos e capacitações sem prévia e expressa autorização da ESP-Floripa.<br>
@@ -584,6 +594,7 @@
   </div>
 
   <script>
+    // Atualiza o ano no rodapé
     document.getElementById('ano').textContent = new Date().getFullYear();
 
     // --- LÓGICA DO MODAL DE CONTATO ---
@@ -603,6 +614,7 @@
     termsModal.addEventListener('click', (e) => { if (e.target === termsModal) { termsModal.classList.remove('is-visible'); } });
 
     // --- OBSERVER DA NAVEGAÇÃO ---
+    // Destaca o link de navegação correspondente à seção visível na tela
     const sections = document.querySelectorAll('main section[id]');
     const navLinks = document.querySelectorAll('nav a[href^="#"]');
     const observer = new IntersectionObserver((entries) => {
@@ -616,9 +628,10 @@
           });
         }
       });
-    }, { rootMargin: '-30% 0px -70% 0px' });
+    }, { rootMargin: '-30% 0px -70% 0px' }); // Ativa quando a seção está no meio da tela
     sections.forEach(section => { observer.observe(section); });
 
+    // Adiciona estilo para leitores de tela
     const sr = document.createElement('style');
     sr.textContent = `.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}`;
     document.head.appendChild(sr);
@@ -635,21 +648,24 @@
         dropdownButtons.forEach(item => {
             item.menu.classList.remove('is-active');
         });
+        // Remove a classe z-index de todos os cards
         allCards.forEach(c => c.classList.remove('is-active-dropdown'));
     }
 
     dropdownButtons.forEach(item => {
         item.btn.addEventListener('click', (event) => {
-            event.stopPropagation();
+            event.stopPropagation(); // Impede que o clique feche o menu imediatamente
             const isActive = item.menu.classList.contains('is-active');
             closeAllDropdowns();
             if (!isActive) {
                 item.menu.classList.add('is-active');
+                // Traz o card clicado para a frente
                 item.btn.closest('.card').classList.add('is-active-dropdown');
             }
         });
     });
 
+    // Fecha os menus se clicar em qualquer lugar fora deles
     window.addEventListener('click', () => {
         closeAllDropdowns();
     });
@@ -661,6 +677,7 @@
     const cards = document.querySelectorAll('.grid .card');
     let noResultsMessage = document.getElementById('no-results');
 
+    // Cria a mensagem de "nenhum resultado" se ela não existir
     if (!noResultsMessage) {
         noResultsMessage = document.createElement('div');
         noResultsMessage.id = 'no-results';
@@ -679,6 +696,7 @@
         performSearch(query);
     });
 
+    // Limpa a busca ao apagar o texto
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase().trim();
         if (query === '') {
@@ -691,6 +709,7 @@
         let foundCard = null;
         cards.forEach(card => {
             const cardText = card.textContent.toLowerCase();
+            // Verifica se o texto do card inclui o termo pesquisado
             if (cardText.includes(query)) {
                 card.style.display = 'flex';
                 resultsFound++;
@@ -700,6 +719,7 @@
             }
         });
         
+        // Se encontrar apenas 1 resultado, rola até ele e o destaca
         if (resultsFound === 1 && foundCard) {
             foundCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             foundCard.classList.add('search-result-highlight');
@@ -711,6 +731,7 @@
         noResultsMessage.style.display = resultsFound === 0 ? 'block' : 'none';
     }
 
+    // Reseta a visualização, mostrando todos os cards
     function resetSearch() {
         cards.forEach(card => {
             card.style.display = 'flex';
@@ -722,11 +743,20 @@
     const canvas = document.getElementById('hero-canvas');
     const ctx = canvas.getContext('2d');
     let particlesArray;
+    // Configurações da animação
     const config = {
-      particleColor: 'rgba(10, 95, 163, 0.7)', lineColor: 'rgba(10, 95, 163, 0.3)', particleAmount: 60,
-      defaultRadius: 3, variantRadius: 3, defaultSpeed: 0.5, variantSpeed: 1, linkRadius: 100,
+      particleColor: 'rgba(10, 95, 163, 0.7)', // Cor das partículas
+      lineColor: 'rgba(10, 95, 163, 0.3)',     // Cor das linhas
+      particleAmount: 60,                     // Quantidade de partículas
+      defaultRadius: 3,
+      variantRadius: 3,
+      defaultSpeed: 0.5,
+      variantSpeed: 1,
+      linkRadius: 100,                        // Distância para criar linhas
     };
-    const mouse = { x: null, y: null, radius: 150 };
+    const mouse = { x: null, y: null, radius: 150 }; // Raio de interação do mouse
+    
+    // Ajusta o canvas para telas com alta densidade de pixels (Retina)
     function setupCanvas() {
         const dpr = window.devicePixelRatio || 1;
         const rect = canvas.getBoundingClientRect();
@@ -734,11 +764,13 @@
         canvas.height = rect.height * dpr;
         ctx.scale(dpr, dpr);
     }
+    // Atualiza a posição do mouse
     window.addEventListener('mousemove', (event) => {
         const rect = canvas.getBoundingClientRect();
         mouse.x = event.clientX - rect.left;
         mouse.y = event.clientY - rect.top;
     });
+    // Classe da Partícula
     class Particle {
         constructor() {
             this.x = Math.random() * canvas.offsetWidth; this.y = Math.random() * canvas.offsetHeight;
@@ -752,6 +784,7 @@
             ctx.fillStyle = config.particleColor; ctx.fill();
         }
         update() { this.border(); this.x += this.vector.x; this.y += this.vector.y; }
+        // Mantém a partícula dentro das bordas
         border() {
             if (this.x >= canvas.offsetWidth || this.x <= 0) this.vector.x *= -1;
             if (this.y >= canvas.offsetHeight || this.y <= 0) this.vector.y *= -1;
@@ -760,6 +793,7 @@
             if (this.x < 0) this.x = 0; if (this.y < 0) this.y = 0;
         }
     }
+    // Cria as linhas entre partículas
     function linkParticles(point1, point2) {
         const distance = Math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2);
         const opacity = 1 - distance / config.linkRadius;
@@ -769,16 +803,20 @@
             ctx.closePath(); ctx.stroke();
         }
     }
+    // Inicializa a animação
     function init() {
         setupCanvas(); particlesArray = [];
         for (let i = 0; i < config.particleAmount; i++) { particlesArray.push(new Particle()); }
     }
+    // Loop de animação
     function animate() {
         ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
         particlesArray.forEach(particle => { particle.update(); particle.draw(); });
+        // Cria linhas entre partículas próximas
         for (let i = 0; i < particlesArray.length; i++) {
             for (let j = i; j < particlesArray.length; j++) { linkParticles(particlesArray[i], particlesArray[j]); }
         }
+        // Cria linhas entre o mouse e partículas próximas
         if (mouse.x != null && mouse.y != null) {
             particlesArray.forEach(p => {
                 const distance = Math.sqrt((mouse.x - p.x) ** 2 + (mouse.y - p.y) ** 2);
@@ -787,6 +825,7 @@
         }
         requestAnimationFrame(animate);
     }
+    // Recria a animação se a tela for redimensionada
     window.addEventListener('resize', init);
     init();
     animate();
